@@ -2,58 +2,42 @@
 function Migrate() {
     echo "Migrating!"
     checkSqlite
-    for f in migrations/*
+    for f in migrations/*.sh
     do
-    echo "Processing migration: $f"
+        echo "Processing migration: $f"
 
-    # Get the filename from the path
-    RESULT=`grep -oP 'migrations/\K\w+' <<< $f`
+        # Get the filename from the path
+        RESULT=`grep -oP 'migrations/\K\w+' <<< $f`
 
-    # Extract the id of the migration
-    ID=`grep -oP '\K\d+' <<< $RESULT`
+        # Extract the id of the migration
+        ID=`grep -oP '\K\d+' <<< $RESULT`
 
-    # Extract the name of the migration
-    NAME=`grep -oP '\d+_\K\w+' <<< $RESULT`
+        # Extract the name of the migration
+        NAME=`grep -oP '\d+_\K\w+' <<< $RESULT`
 
-    echo "ID: $ID"
-    echo "Name: $NAME"
-    echo "CWD: $(pwd)"
+        if [ ! -d "$DATA_DIR" ]; then
+            mkdir $DATA_DIR
+        fi
+        
+        if [ ! -f "$DATA_DIR/$DATA_FILE" ]; then
+            initSqlite
+        fi
+        
+        hasMigration $ID
+        HAS_MIGRATION=$?
 
-    DATA_DIR=".bm"
-    DATA_FILE="migrations.db"
+        isMigrated $ID
+        IS_MIGRATED=$?
 
-    if [ ! -d "$DATA_DIR" ]; then
-        mkdir $DATA_DIR
-    fi
-    
-    if [ ! -f "$DATA_DIR/$DATA_FILE" ]; then
-        initSqlite
-    fi
-    
-    echo ""
-    echo "Migrations:"
-    
-    listMigrations
+        if [ $IS_MIGRATED -eq 1 ]; then
+            continue
+        fi
 
-    hasMigration $ID
-    HAS_MIGRATION=$?
+        echo "Migrating file: $f"
 
-    echo "has migration: $HAS_MIGRATION"
-    
-    isMigrated $ID
-    IS_MIGRATED=$?
+        . $f
+        migrateUp
 
-    echo "is migrated: $IS_MIGRATED"
-
-    if [ $IS_MIGRATED -eq 1 ]; then
-        continue
-    fi
-
-    echo "Migrating file: $f"
-
-    . $f
-
-    migrateUp
-
+        echo "Migrated file: $f"
     done
 }
