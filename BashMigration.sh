@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ./Version.sh
+source ./constants/index.sh
 source ./functions/index.sh
 
 function showUsage () {
