@@ -39,7 +39,7 @@ function unmigrateSpecific() {
                 continue
             fi
 
-            migrateFile $file
+            unmigrateFile $file
         done
     done
 }
@@ -75,6 +75,6 @@ function unmigrateFile () {
     . $file
     migrateDown
     setMigrated $ID 0
-    echo "${GREEN}Migrated file ${WHITE}$file${RESET}"
+    echo "${GREEN}Unmigrated file ${WHITE}$file${RESET}"
 }
 
