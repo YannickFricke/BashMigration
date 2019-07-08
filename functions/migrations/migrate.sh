@@ -19,7 +19,7 @@ function Migrate() {
             mkdir $DATA_DIR
         fi
         
-        if [ ! -f "$DATA_DIR/$DATA_FILE" ]; then
+        if [ ! -f "$DB_PATH" ]; then
             initSqlite
         fi
         
