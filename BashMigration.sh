@@ -20,7 +20,26 @@ if [ $# -lt 1 ]; then
 fi
 
 if [ $1 = "migrate" ]; then
-    Migrate
+    migration_args=""
+
+    if [ $# -eq 1 ]; then
+        migration_args="all"
+    else
+        if [ $2 = "all" ]; then
+            migration_args="all"
+        else
+            for item in "${@:2}"
+            do
+                if [ -z $migration_args ]; then
+                    migration_args="$item"
+                else
+                    migration_args="$migration_args $item"
+                fi
+            done
+        fi
+    fi
+
+    Migrate $migration_args
 elif [ $1 = "unmigrate" ]; then
     Unmigrate
 elif [ $1 = "version" ]; then

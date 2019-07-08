@@ -1,7 +1,15 @@
 # Migrates all remaining revisions
 function Migrate() {
-    echo "Migrating!"
+    echo "Starting migration!"
+
+    if [ $1 = "all" ]; then
+        echo "Migrating everything!"
+    else
+        echo "Migrating only specific revisions"
+    fi
+    
     checkSqlite
+
     for f in migrations/*.sh
     do
         echo "Processing migration: $f"
