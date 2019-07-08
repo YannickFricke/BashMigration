@@ -13,10 +13,6 @@ function initSqlite() {
     echo $INIT_SQL | sqlite3 $DB_PATH
 }
 
-function addMigration() {
-    sqlite3 $DB_PATH "INSERT INTO migrations (id, name) VALUES ('$3', '$4')"
-}
-
 function listMigrations() {
     sqlite3 $DB_PATH "SELECT * FROM migrations"
 }
@@ -39,4 +35,26 @@ function isMigrated() {
     else
         return 0
     fi
+}
+
+function setMigrated() {
+    ID=$1
+    MIGRATION_STATUS=$2
+
+    RESULT=`sqlite3 $DB_PATH "UPDATE migrations SET migrated = $MIGRATION_STATUS WHERE id = \"$ID\""`
+}
+
+function insertMigration() {
+    ID=$1
+    NAME=$2
+
+    hasMigration $ID
+    has_migration=$?
+
+    # Check if the migration already exists
+    if [ $has_migration -eq 1 ]; then
+        return 0
+    fi
+
+    RESULT=`sqlite3 $DB_PATH "INSERT INTO migrations (id, name) VALUES ('$ID', '$NAME')"`
 }
