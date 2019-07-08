@@ -11,5 +11,7 @@ source "$INCLUDE_PATH/functions/migrations.sh"
 source "$INCLUDE_PATH/functions/version.sh"
 
 # Load step functions
-
 source "$INCLUDE_PATH/functions/steps.sh"
+
+# Load package manager functions
+source "$INCLUDE_PATH/functions/package_managers/index.sh"
