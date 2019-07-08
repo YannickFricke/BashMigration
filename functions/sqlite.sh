@@ -14,7 +14,7 @@ function checkSqlite() {
 }
 
 function initSqlite() {
-    cat "$(pwd)/.bm/init.sql" | sqlite3 $DATA_PATH
+    echo $INIT_SQL | sqlite3 $DATA_PATH
 }
 
 function addMigration() {
