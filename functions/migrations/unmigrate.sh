@@ -51,7 +51,7 @@ function unmigrateFile () {
     RESULT=`grep -oP 'migrations/\K\w+' <<< $file`
 
     # Extract the id of the migration
-    ID=`grep -oP '\K\d+' <<< $RESULT`
+    ID=`grep -oP '^\K\d+' <<< $RESULT`
 
     # Extract the name of the migration
     NAME=`grep -oP '\d+_\K\w+' <<< $RESULT`
