@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-source ./constants/index.sh
-source ./functions/index.sh
+INCLUDE_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
+
+source "$INCLUDE_PATH/constants/index.sh"
+source "$INCLUDE_PATH/functions/index.sh"
 
 function showUsage () {
     echo "$1"

@@ -1,11 +1,11 @@
 # Load all SQLite functions
-source ./functions/sqlite.sh
+source "$INCLUDE_PATH/functions/sqlite.sh"
 
 # Load all custom filesystem functions
-source ./functions/filesystem.sh
+source "$INCLUDE_PATH/functions/filesystem.sh"
 
 # Load all migration functions
-source ./functions/migrations.sh
+source "$INCLUDE_PATH/functions/migrations.sh"
 
 # Load the ShowVersion function
-source ./functions/version.sh
+source "$INCLUDE_PATH/functions/version.sh"
