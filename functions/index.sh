@@ -9,3 +9,7 @@ source "$INCLUDE_PATH/functions/migrations.sh"
 
 # Load the ShowVersion function
 source "$INCLUDE_PATH/functions/version.sh"
+
+# Load step functions
+
+source "$INCLUDE_PATH/functions/steps.sh"
