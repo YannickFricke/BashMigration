@@ -41,7 +41,26 @@ if [ $1 = "migrate" ]; then
 
     Migrate $migration_args
 elif [ $1 = "unmigrate" ]; then
-    Unmigrate
+    unmigration_args=""
+
+    if [ $# -eq 1 ]; then
+        unmigration_args="all"
+    else
+        if [ $2 = "all" ]; then
+            unmigration_args="all"
+        else
+            for item in "${@:2}"
+            do
+                if [ -z $migration_args ]; then
+                    unmigration_args="$item"
+                else
+                    unmigration_args="$unmigration_args $item"
+                fi
+            done
+        fi
+    fi
+
+    Unmigrate $unmigration_args
 elif [ $1 = "version" ]; then
     ShowVersion
 else
