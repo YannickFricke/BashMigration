@@ -25,6 +25,7 @@ applied revisions.
 |  version  | Shows the current version                                              |
 |  migrate  | Migrates all revisions which are located in the `migrations` directory |
 | unmigrate | Reversing applied migrations                                           |
+|   list    | List the status of all migrations                                      |
 
 ### Extra information
 
