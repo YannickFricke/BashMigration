@@ -87,6 +87,11 @@ elif [ $1 = "unmigrate" ]; then
     Unmigrate $unmigration_args
 
     removeSemaphore
+elif [ $1 = "list" ]; then
+    echo "A green line means that the migration is applied"
+    echo "A red line means that the migration is not applied"
+
+    listMigrations
 elif [ $1 = "version" ]; then
     ShowVersion
 else
