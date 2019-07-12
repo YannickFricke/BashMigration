@@ -22,6 +22,16 @@ if [ $# -lt 1 ]; then
 fi
 
 if [ $1 = "migrate" ]; then
+    checkSemaphore
+    SEMAPHORE_EXISTS=$?
+
+    if [ $SEMAPHORE_EXISTS = "1" ]; then
+        echo "Semaphore exists. Do not going to migrate"
+        exit 1
+    fi
+
+    createSemaphore
+
     migration_args=""
 
     if [ $# -eq 1 ]; then
@@ -42,7 +52,19 @@ if [ $1 = "migrate" ]; then
     fi
 
     Migrate $migration_args
+
+    removeSemaphore
 elif [ $1 = "unmigrate" ]; then
+    checkSemaphore
+    SEMAPHORE_EXISTS=$?
+
+    if [ $SEMAPHORE_EXISTS = "1" ]; then
+        echo "Semaphore exists. Do not going to migrate"
+        exit 1
+    fi
+
+    createSemaphore
+    
     unmigration_args=""
 
     if [ $# -eq 1 ]; then
@@ -63,6 +85,8 @@ elif [ $1 = "unmigrate" ]; then
     fi
 
     Unmigrate $unmigration_args
+
+    removeSemaphore
 elif [ $1 = "version" ]; then
     ShowVersion
 else
