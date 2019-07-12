@@ -15,3 +15,6 @@ source "$INCLUDE_PATH/functions/steps.sh"
 
 # Load package manager functions
 source "$INCLUDE_PATH/functions/package_managers/index.sh"
+
+# Load semaphore functions
+source "$INCLUDE_PATH/functions/semaphore.sh"
