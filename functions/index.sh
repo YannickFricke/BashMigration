@@ -1,11 +1,20 @@
 # Load all SQLite functions
-source ./functions/sqlite.sh
+source "$INCLUDE_PATH/functions/sqlite.sh"
 
 # Load all custom filesystem functions
-source ./functions/filesystem.sh
+source "$INCLUDE_PATH/functions/filesystem.sh"
 
 # Load all migration functions
-source ./functions/migrations.sh
+source "$INCLUDE_PATH/functions/migrations.sh"
 
 # Load the ShowVersion function
-source ./functions/version.sh
+source "$INCLUDE_PATH/functions/version.sh"
+
+# Load step functions
+source "$INCLUDE_PATH/functions/steps.sh"
+
+# Load package manager functions
+source "$INCLUDE_PATH/functions/package_managers/index.sh"
+
+# Load semaphore functions
+source "$INCLUDE_PATH/functions/semaphore.sh"
