@@ -1,1 +1,1 @@
-BM_VERSION="0.0.1"
+BM_VERSION="1.0.3"

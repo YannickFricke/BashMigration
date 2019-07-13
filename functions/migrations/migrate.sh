@@ -1,26 +1,28 @@
 # Migrates all remaining revisions
 function Migrate() {
-    echo "${GREEN}Starting migration!${RESET}"
+    info "Starting migration!"
 
     checkSqlite
 
     if [ ! -d "$DATA_DIR" ]; then
         mkdir $DATA_DIR
     fi
-    
+
     if [ ! -f "$DB_PATH" ]; then
         initSqlite
     fi
 
     if [ $1 = "all" ]; then
-        echo "${BLUE}Migrating everything!${RESET}"
+        info "Migrating all revisions!"
         migrateAll
-        echo "${GREEN}Successfully migrated!${RESET}"
+        success "INFORMATIONAL" "Successfully migrated!"
     else
-        echo "${BLUE}Migrating only specific revisions:${RESET} ${@}"
+        info "Migrating only specific revisions: ${@}"
         migrateSpecific ${@}
-        echo "${GREEN}Successfully migrated!${RESET}"
+        success "INFORMATIONAL" "Successfully migrated!"
     fi
+
+    showSummary "migrated" 0
 }
 
 function migrateAll() {
@@ -48,32 +50,51 @@ function migrateFile() {
     file=$1
 
     # Get the filename from the path
-    RESULT=`grep -oP 'migrations/\K\w+' <<< $file`
+    local RESULT=`grep -oP 'migrations/\K\w+' <<< $file`
 
     # Extract the id of the migration
-    ID=`grep -oP '^\K\d+' <<< $RESULT`
+    local ID=`grep -oP '^\K\d+' <<< $RESULT`
 
     # Extract the name of the migration
-    NAME=`grep -oP '\d+_\K\w+' <<< $RESULT`
+    local NAME=`grep -oP '\d+_\K\w+' <<< $RESULT`
 
     hasMigration $ID
-    has_migration=$?
+    local has_migration=$?
 
     if [ $has_migration -eq 0 ]; then
         echo "${CYAN}Migration does not exists. Adding it.${RESET}"
         insertMigration $ID $NAME
     fi
-    
+
     isMigrated $ID
-    is_migrated=$?
+    local is_migrated=$?
 
     if [ $is_migrated -eq 1 ]; then
         echo "${YELLOW}Migration ${WHITE}$file${YELLOW} is already migrated.${RESET}"
         return 0
     fi
-    
+
     . $file
     migrateUp
+
+    local MIGRATION_EXIT_STATUS=$?
+
+    if [ $MIGRATION_EXIT_STATUS -eq 1 ]; then
+        error "Migration of file ${WHITE}$file${RED} failed! Rolling back!${RESET}"
+
+        warning "Rolling back all migrated revisions!${RESET}"
+
+        rollback "migrate" "${ID}_${NAME}"
+
+        showSummary "migrated" 1
+
+        debug "Going to remove semaphore"
+        removeSemaphore
+        debug "Removed semaphore"
+        exit 0
+    fi
+
     setMigrated $ID 1
     echo "${GREEN}Migrated file ${WHITE}$file${RESET}"
+    PROCESSED_MIGRATIONS+=("${ID}_${NAME}")
 }

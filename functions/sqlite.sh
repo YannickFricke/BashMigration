@@ -13,6 +13,14 @@ function initSqlite() {
     echo $INIT_SQL | sqlite3 $DB_PATH
 }
 
+function listNotMigratedMigrations() {
+    sqlite3 $DB_PATH "SELECT id, name FROM migrations where migrated = 0"
+}
+
+function listMigratedMigrations() {
+    sqlite3 $DB_PATH "SELECT id, name FROM migrations where migrated = 1"
+}
+
 function listMigrations() {
     sqlite3 $DB_PATH "SELECT * FROM migrations"
 }
