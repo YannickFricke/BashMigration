@@ -41,7 +41,12 @@ function showNotChangedFiles() {
         fi
     done
 
-    if [ $SUMMARY_TYPE = "migratde" ]; then
+    if [[ $VALUE = "" ]]; then
+        VALUE="NONE"
+    fi
+    
+
+    if [ $SUMMARY_TYPE = "migrated" ]; then
         info "Already migrated files: ${YELLOW}$VALUE"
     elif [ $SUMMARY_TYPE = "unmigrated" ]; then
         info "Already unmigrated files: ${YELLOW}$VALUE"
