@@ -1,6 +1,6 @@
 # Unmigrates to a specific revision
 function Unmigrate() {
-    echo "${GREEN}Starting unmigration!${RESET}"    
+    info "Starting unmigration!"
 
     checkSqlite
 
@@ -13,20 +13,22 @@ function Unmigrate() {
     fi
 
     if [ $1 = "all" ]; then
-        echo "${BLUE}Unmigrating everything!${RESET}"
+        info "Unmigrating all revisions!"
         unmigrateAll
-        echo "${GREEN}Successfully unmigrated!${RESET}"
+        success $LEVEL_INFO "Successfully unmigrated all revisions!"
     else
-        echo "${BLUE}Unmigrating only specific revisions:${RESET} ${@}"
+        echo "Unmigrating only specific revisions: ${@}"
         unmigrateSpecific ${@}
-        echo "${GREEN}Successfully unmigrated!${RESET}"
+        success $LEVEL_INFO "Successfully unmigrated the following revisions: ${@}"
     fi
 }
 
 function unmigrateAll() {
     for file in migrations/*.sh
     do
+        debug "Unmigrating file: ${WHITE}$file"
         unmigrateFile $file
+        debug "Unmigrated file ${WHITE}$file"
     done
 }
 
@@ -60,7 +62,7 @@ function unmigrateFile () {
     has_migration=$?
 
     if [ $has_migration -eq 0 ]; then
-        echo "${CYAN}Migration does not exists. Adding it.${RESET}"
+        info "Migration does not exists. Adding it."
         insertMigration $ID $NAME
     fi
     
@@ -68,14 +70,13 @@ function unmigrateFile () {
     is_migrated=$?
 
     if [ $is_migrated -eq 0 ]; then
-        echo "${YELLOW}Migration ${WHITE}$file${YELLOW} is not migrated.${RESET}"
+        info "${YELLOW}Migration ${WHITE}$file${YELLOW} is not migrated."
         return 0
     fi
     
     . $file
     migrateDown
     setMigrated $ID 0
-    echo "${GREEN}Unmigrated file ${WHITE}$file${RESET}"
     PROCESSED_MIGRATIONS+=("${ID}_${NAME}")
 }
 
