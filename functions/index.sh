@@ -21,3 +21,6 @@ source "$INCLUDE_PATH/functions/package_managers/index.sh"
 
 # Load semaphore functions
 source "$INCLUDE_PATH/functions/semaphore.sh"
+
+# Load the summary function
+source "$INCLUDE_PATH/functions/summary.sh"
