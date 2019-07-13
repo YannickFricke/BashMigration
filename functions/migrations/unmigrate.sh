@@ -76,5 +76,6 @@ function unmigrateFile () {
     migrateDown
     setMigrated $ID 0
     echo "${GREEN}Unmigrated file ${WHITE}$file${RESET}"
+    PROCESSED_MIGRATIONS+=("${ID}_${NAME}")
 }
 
