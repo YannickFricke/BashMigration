@@ -1,3 +1,6 @@
+# Load all logging functions
+source "$INCLUDE_PATH/functions/logging.sh"
+
 # Load all SQLite functions
 source "$INCLUDE_PATH/functions/sqlite.sh"
 
