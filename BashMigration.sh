@@ -11,6 +11,7 @@ function showUsage () {
     echo "Commands"
     echo "- migrate"
     echo "- unmigrate"
+    echo "- list"
     echo "- version"
     echo "-----------------------------------"
     echo "Version: $BM_VERSION"
