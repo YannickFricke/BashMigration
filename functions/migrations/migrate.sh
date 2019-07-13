@@ -1,6 +1,6 @@
 # Migrates all remaining revisions
 function Migrate() {
-    echo "${GREEN}Starting migration!${RESET}"
+    info "Starting migration!"
 
     checkSqlite
 
@@ -13,13 +13,13 @@ function Migrate() {
     fi
 
     if [ $1 = "all" ]; then
-        echo "${BLUE}Migrating everything!${RESET}"
+        info "Migrating all revisions!"
         migrateAll
-        echo "${GREEN}Successfully migrated!${RESET}"
+        success "INFORMATIONAL" "Successfully migrated!"
     else
-        echo "${BLUE}Migrating only specific revisions:${RESET} ${@}"
+        info "Migrating only specific revisions: ${@}"
         migrateSpecific ${@}
-        echo "${GREEN}Successfully migrated!${RESET}"
+        success "INFORMATIONAL" "Successfully migrated!"
     fi
 }
 
@@ -74,6 +74,21 @@ function migrateFile() {
     
     . $file
     migrateUp
+
+    local MIGRATION_EXIT_STATUS=$?
+
+    if [ $MIGRATION_EXIT_STATUS -eq 1 ]; then
+        error "Migration of file ${WHITE}$file${RED} failed! Rolling back!${RESET}"
+
+        warning "Rolling back all applied migrations!${RESET}"
+
+        debug "Going to remove semaphore"
+        removeSemaphore
+        debug "Removed semaphore"
+        exit 0
+    fi
+    
+
     setMigrated $ID 1
     echo "${GREEN}Migrated file ${WHITE}$file${RESET}"
     PROCESSED_MIGRATIONS+=("${ID}_${NAME}")
