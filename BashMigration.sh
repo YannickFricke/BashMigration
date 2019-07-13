@@ -24,6 +24,8 @@ if [ $# -lt 1 ]; then
     exit 0
 fi
 
+setSummaryStatus $COMMAND
+
 if [ $COMMAND = "migrate" ]; then
     checkSemaphore
     SEMAPHORE_EXISTS=$?
