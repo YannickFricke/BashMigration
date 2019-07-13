@@ -16,6 +16,7 @@ function showSummary() {
         info "Unmigrated files: ${RED}$FILES"
     else
         error "Unknown summary type: $SUMMARY_TYPE"
+        return 0
     fi
     
     showNotChangedFiles $SUMMARY_TYPE
