@@ -27,6 +27,7 @@ Bash-Migration is a tool for applying / reversing migrations to a server.
 - Reverse migrations you don't need anymore
 - Automatic rollback when an action failed
 - Possibility to apply or reverse specific migrations
+- Uses a semaphore to prevent running in parallel
 
 ## Requirements
 
