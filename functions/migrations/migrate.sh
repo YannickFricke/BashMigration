@@ -76,4 +76,5 @@ function migrateFile() {
     migrateUp
     setMigrated $ID 1
     echo "${GREEN}Migrated file ${WHITE}$file${RESET}"
+    PROCESSED_MIGRATIONS+=("${ID}_${NAME}")
 }

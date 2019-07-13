@@ -15,3 +15,6 @@ source "$INCLUDE_PATH/constants/version.sh"
 
 # Load all the package manager constants
 source "$INCLUDE_PATH/constants/package.sh"
+
+# Load all the package manager constants
+source "$INCLUDE_PATH/constants/migration.sh"
