@@ -17,12 +17,14 @@ function showUsage () {
     echo "Version: $BM_VERSION"
 }
 
+COMMAND=$1
+
 if [ $# -lt 1 ]; then
     showUsage $0
     exit 0
 fi
 
-if [ $1 = "migrate" ]; then
+if [ $COMMAND = "migrate" ]; then
     checkSemaphore
     SEMAPHORE_EXISTS=$?
 
@@ -55,7 +57,7 @@ if [ $1 = "migrate" ]; then
     Migrate $migration_args
 
     removeSemaphore
-elif [ $1 = "unmigrate" ]; then
+elif [ $COMMAND = "unmigrate" ]; then
     checkSemaphore
     SEMAPHORE_EXISTS=$?
 
@@ -88,15 +90,15 @@ elif [ $1 = "unmigrate" ]; then
     Unmigrate $unmigration_args
 
     removeSemaphore
-elif [ $1 = "list" ]; then
+elif [ $COMMAND = "list" ]; then
     echo "A green line means that the migration is applied"
     echo "A red line means that the migration is not applied"
 
     listMigrations
-elif [ $1 = "version" ]; then
+elif [ $COMMAND = "version" ]; then
     ShowVersion
 else
-    echo "Unknown command: $1"
+    echo "Unknown command: $COMMAND"
     showUsage $0
     exit 1
 fi
