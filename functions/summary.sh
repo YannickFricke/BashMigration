@@ -2,6 +2,7 @@ SUMMARY_FILES=$()
 
 function showSummary() {
     local SUMMARY_TYPE=$1
+    local HAS_ERROR=$2
     local FILES="${PROCESSED_MIGRATIONS[*]}"
 
     if [ ${#PROCESSED_MIGRATIONS[*]} -eq 0 ]; then
@@ -11,14 +12,22 @@ function showSummary() {
     info "================== Summary =================="
 
     if [ $SUMMARY_TYPE = "migrated" ]; then
-        info "Migrated files: ${GREEN}$FILES"
+        if [ $HAS_ERROR -eq 1 ]; then
+            info "Migrated files: ${RED}NONE"
+        else
+            info "Migrated files: ${GREEN}$FILES"
+        fi
     elif [ $SUMMARY_TYPE = "unmigrated" ]; then
-        info "Unmigrated files: ${RED}$FILES"
+        if [ $HAS_ERROR -eq 1 ]; then
+            info "Migrated files: ${RED}NONE"
+        else
+            info "Unmigrated files: ${RED}$FILES"
+        fi
     else
         error "Unknown summary type: $SUMMARY_TYPE"
         return 0
     fi
-    
+
     showNotChangedFiles $SUMMARY_TYPE
 
     info "============================================="
@@ -44,7 +53,6 @@ function showNotChangedFiles() {
     if [[ $VALUE = "" ]]; then
         VALUE="NONE"
     fi
-    
 
     if [ $SUMMARY_TYPE = "migrated" ]; then
         info "Already migrated files: ${YELLOW}$VALUE"
