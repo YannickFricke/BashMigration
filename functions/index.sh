@@ -24,3 +24,6 @@ source "$INCLUDE_PATH/functions/semaphore.sh"
 
 # Load the summary function
 source "$INCLUDE_PATH/functions/summary.sh"
+
+# Load the rollback function
+source "$INCLUDE_PATH/functions/rollback.sh"
