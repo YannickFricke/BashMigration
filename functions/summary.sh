@@ -56,8 +56,7 @@ function setSummaryStatus() {
     elif [ $COMMAND = "unmigrate" ]; then
         FUNCTION_NAME="listNotMigratedMigrations"
     else
-        error "Unknown summary type: $COMMAND"
-        return 1
+        return 0
     fi
 
     debug "Determined summary status command: $COMMAND = $FUNCTION_NAME"
