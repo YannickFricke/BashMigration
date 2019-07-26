@@ -1,22 +1,6 @@
 function Migrate() {
     info "Starting migration!"
 
-    # Check if the SQLite database exists
-    checkSqlite
-
-    # Check if the data directory exists
-    if [ ! -d "$DATA_DIR" ]; then
-        # Data directory does not exists
-        # Creating it
-        mkdir $DATA_DIR
-    fi
-
-    # Check if the database file exists
-    if [ ! -f "$DB_PATH" ]; then
-        # Initialize the database
-        initSqlite
-    fi
-
     # Check the migration arguments
     if [ $1 = "all" ]; then
         # We received the argument "all"

@@ -1,14 +1,4 @@
 function listMigrations() {
-    checkSqlite
-
-    if [ ! -d "$DATA_DIR" ]; then
-        mkdir $DATA_DIR
-    fi
-    
-    if [ ! -f "$DB_PATH" ]; then
-        initSqlite
-    fi
-
     for file in migrations/*.sh; do
         listMigrationStatus $file
     done
