@@ -62,6 +62,11 @@ function showNotChangedFiles() {
 }
 
 function setSummaryStatus() {
+    if [ ! -d "$(pwd)/$DATA_DIR" ]; then
+        debug "Creating data directory"
+        mkdir "$(pwd)/$DATA_DIR"
+    fi
+
     local COMMAND=$1
 
     if [ $COMMAND = "migrate" ]; then
