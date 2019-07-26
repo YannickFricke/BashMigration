@@ -28,7 +28,7 @@ function listMigrations() {
 function hasMigration() {
     RESULT=`sqlite3 $DB_PATH "SELECT COUNT(*) as count FROM migrations WHERE id = \"$1\""`
 
-    if [ $RESULT -eq 1 ]; then
+    if [[ $RESULT -eq 1 ]]; then
         return 1
     else
         return 0
@@ -38,7 +38,7 @@ function hasMigration() {
 function isMigrated() {
     RESULT=`sqlite3 $DB_PATH "SELECT COUNT(*) as count FROM migrations WHERE id = \"$1\" and migrated = 1"`
 
-    if [ $RESULT -eq 1 ]; then
+    if [[ $RESULT -eq 1 ]]; then
         return 1
     else
         return 0
