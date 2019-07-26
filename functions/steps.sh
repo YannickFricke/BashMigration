@@ -23,3 +23,9 @@ function subsubstep() {
 	echo "STEP ${GREEN}$STEP${RESET}.${YELLOW}$SUBSTEP${RESET}.${MAGENTA}$SUBSUBSTEP${RESET}: ${CYAN}$@${RESET}"
     echo ""
 }
+
+function resetSteps() {
+    STEP=0
+    SUBSTEP=0
+    SUBSUBSTEP=0
+}

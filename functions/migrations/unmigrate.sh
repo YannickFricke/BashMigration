@@ -127,4 +127,5 @@ function unmigrateFile () {
 
     # Add the revision to the processed migrations
     PROCESSED_MIGRATIONS+=("${ID}_${NAME}")
+    resetSteps
 }
