@@ -9,6 +9,9 @@ source "$INCLUDE_PATH/constants/index.sh"
 # Include all functions
 source "$INCLUDE_PATH/functions/index.sh"
 
+# Check if all requirements are available
+checkRequirements
+
 # Shows the usage of the tool
 function showUsage () {
     echo "$1"

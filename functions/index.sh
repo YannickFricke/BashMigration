@@ -27,3 +27,6 @@ source "$INCLUDE_PATH/functions/summary.sh"
 
 # Load the rollback function
 source "$INCLUDE_PATH/functions/rollback.sh"
+
+# Load the requirement function
+source "$INCLUDE_PATH/functions/requirements.sh"
