@@ -67,6 +67,12 @@ function setSummaryStatus() {
         mkdir "$(pwd)/$DATA_DIR"
     fi
 
+    # Check if the database file exists
+    if [ ! -f "$DB_PATH" ]; then
+        # Initialize the database
+        initSqlite
+    fi
+
     local COMMAND=$1
 
     if [ $COMMAND = "migrate" ]; then
